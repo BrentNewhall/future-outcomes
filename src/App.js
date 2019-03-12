@@ -1,15 +1,298 @@
 import React, { Component } from 'react';
+import {
+  BrowserRouter as Router,
+  Route,
+  Link
+} from 'react-router-dom';
+import { connect } from 'react-redux';
+import './App.css';
 
+import { moves } from './Moves.js';
+import store from './store.js';
+import {
+  createNewCharacter,
+  setCharacters,
+  deleteCharacter
+} from './actions.js';
 
-class App extends Component {
+const getOutcomeRows = (move, highlights) => {
+  let outcomes = [];
+  move.outcomes.forEach( (outcome, index) => {
+    let specialClass = 'bad';
+    if( index >= move.lastNegative ) {
+      specialClass = 'good';
+    }
+    outcomes.push( <tr key={'move' + move.id + '.' + index}><td key={move.id + 'movevalue' + index} className={'OutcomeNumber ' + specialClass}>{index+1}</td><td key={move.id + 'movedesc' + index} className={'OutcomeDescription ' + highlights[index]}>{outcome}</td></tr> );
+  });
+  return outcomes;
+}
+
+class AddMove extends Component {
+  moveSelected( moveID ) {
+    let characters = this.props.characters;
+    characters[this.props.match.params.id].moves.push( moveID );
+    const setCharacters = () => new Promise( (resolve, reject) => {
+      localStorage.setItem( "characters", characters );
+      resolve();
+    });
+    setCharacters().then( this.props.history.push( "/char/" + this.props.match.params.id ) );
+  }
+
   render() {
-    return (
+    let tables = moves.map( (move,moveIndex) => {
+      if( this.props.characters[this.props.match.params.id].moves.indexOf( move.id ) >= 0 ) {
+        return <div key={moveIndex}></div>;
+      }
+      let description = '';
+      if( move.description ) {
+        description = <em>{move.description}</em>
+      }
+      let outcomes = getOutcomeRows( move, [] );
+      return( <div key={moveIndex} className="Outcome col m6">
+                <div className="OutcomeTitle">
+                  <button className='OutcomeButton btn' onClick={(e) => this.moveSelected(move.id)}>
+                    {move.title}
+                  </button>
+                </div>
+                <div className="OutcomeContent">
+                  {description}
+                  <table>
+                  <thead><tr><th>Roll</th><th>Outcome</th></tr></thead>
+                  <tbody>{outcomes}</tbody>
+                  </table>
+                </div>
+              </div> );
+    });
+    return( 
       <div className="App">
-        <header className="App-header">
-        </header>
+        <div className="container">
+          <header>
+            <h1>Add Move</h1>
+          </header>
+          <nav><Link to="/">Home</Link></nav>
+          {tables}
+        </div>
       </div>
     );
   }
 }
+
+class Outcome extends Component {
+  constructor( props ) {
+    super( props );
+    this.state = {
+      title: '',
+      content: '',
+    }
+    this.highlights = ['','','','','',''];
+    this.id = props.id;
+    this.outcomeClicked = this.outcomeClicked.bind( this );
+  }
+
+  componentDidMount() {
+    this.generateOutcomes();
+  }
+
+  generateOutcomes() {
+    moves.forEach( (move) => {
+      if( move.id === this.id ) {
+        let outcomes = getOutcomeRows( move, this.highlights );
+        this.setState( { title: move.title, content: outcomes } );
+      }
+    });
+  }
+
+  outcomeClicked(id) {
+    for( let index in this.highlights ) {
+      this.highlights[index] = '';
+    }
+    let outcome1 = parseInt( Math.random() * 6 );
+    let outcome2 = parseInt( Math.random() * 6 );
+    if( outcome1 === outcome2 ) {
+      outcome2 = 5 - outcome2;
+    }
+    this.highlights[outcome1] = 'highlight';
+    this.highlights[outcome2] = 'highlight';
+    this.generateOutcomes();
+  }
+
+  render() {
+    let tbodyContent = [];
+    if (this.state.content.length>0){
+      tbodyContent = this.state.content;
+    }
+    return (
+      <div className="Outcome col m6">
+        <div className="OutcomeTitle">
+          <button className='OutcomeButton btn' onClick={(e) => this.outcomeClicked(this.id)}>
+            {this.state.title}
+          </button>
+        </div>
+        <div className="OutcomeContent">
+          <table>
+            <thead><tr><th>Roll</th><th>Outcome</th></tr></thead>
+            <tbody>{tbodyContent}</tbody>
+          </table>
+        </div>
+      </div>
+    );
+  }
+}
+
+class CharacterPage extends Component {
+  constructor( props ) {
+    super( props );
+    this.state = {
+      name: '',
+      moves: [],
+      luckPoints: 0,
+    }
+    this.redirect = false;
+    this.deleteCharacter = this.deleteCharacter.bind( this );
+    this.updateStorageAfterDelete = this.updateStorageAfterDelete.bind( this );
+  }
+
+  componentDidMount() {
+    this.setState( {
+      name: store.getState().characters[this.props.match.params.id].name,
+      moves: store.getState().characters[this.props.match.params.id].moves,
+      luckPoints: store.getState().characters[this.props.match.params.id].luckPoints,
+    } );
+  }
+
+  updateStorageAfterDelete() {
+    const setCharacters = () => new Promise( (resolve, reject) => {
+      localStorage.setItem( "characters", JSON.stringify(this.props.characters) );
+    });
+    setCharacters().then( this.props.history.push( "/" ) );
+  }
+
+  deleteCharacter() {
+    const deleteChar = () => new Promise( (resolve, reject) => {
+      store.dispatch( deleteCharacter( this.props.match.params.id ) );
+      resolve();
+    })
+    deleteChar().then( this.updateStorageAfterDelete );
+  }
+
+  addMove() {
+
+  }
+
+  render() {
+    let moves = [];
+    for( let moveIndex = 0; moveIndex < this.state.moves.length - 1; moveIndex += 2 ) {
+      moves.push( <div className="row" key={moveIndex}>
+                    <Outcome id={this.state.moves[moveIndex]} />
+                    <Outcome id={this.state.moves[moveIndex+1]}/>
+                  </div> );
+    }
+    if( this.state.moves.length % 2 !== 0 ) {
+      moves.push( <div className="row" key={this.state.moves.length}>
+                    <Outcome id={this.state.moves[this.state.moves.length-1]}/>
+                  </div> );
+    }
+    return (
+      <div className="App">
+        <div className="container">
+          <header>
+            <h1>{this.state.name}</h1>
+          </header>
+          <nav><Link to="/">Home</Link></nav>
+          <aside>Luck: {this.state.luckPoints}</aside>
+          {moves}
+          <Link className="btn" to={"/char/addMove/" + this.props.match.params.id}>Add Move</Link><br />
+          <button className="btn red" onClick={(e) => this.deleteCharacter()}>Delete</button>
+        </div>
+      </div>
+    );
+  }
+}
+
+class Home extends Component {
+  constructor( props ) {
+    super( props );
+    this.newCharName = React.createRef();
+    this.createCharacter = this.createCharacter.bind( this );
+    this.updateStorage = this.updateStorage.bind( this );
+  }
+
+  componentDidMount() {
+    if( this.props.characters === undefined ) {
+      this.hydrate();
+    }
+  }
+
+  hydrate() {
+    if( localStorage.getItem("characters") !== 'undefined' ) {
+      store.dispatch( setCharacters( JSON.parse(localStorage.getItem("characters")) ) );
+    }
+  }
+
+  updateStorage() {
+    localStorage.setItem( "characters", JSON.stringify(this.props.characters) );
+  }
+
+  createCharacter( evt ) {
+    const addChar = () => new Promise( (resolve, reject) => {
+      store.dispatch( createNewCharacter(this.newCharName.current.value,['default','physical-combat','negotiation'],0) );
+      resolve();
+    })
+    addChar().then( this.updateStorage );
+  }
+
+  render() {
+    let characters = [];
+    if( this.props.characters !== undefined ) {
+      this.props.characters.forEach( (character,index) => {
+        characters.push( <li key={index}><Link to={"/char/" + index}>{character.name}</Link></li> );
+      });
+    }
+    return (
+      <div className="App">
+        <div className="container">
+          <header>
+            <h1>Future Outcome</h1>
+          </header>
+          <nav><Link to="/">Home</Link></nav>
+          <h2>Characters</h2>
+          <ul>
+            {characters}
+          </ul>
+          <h2>Create Character</h2>
+          <label htmlFor="new-character-name">Name:</label><input type="text" name="new-character-name" id="new-character-name" ref={this.newCharName} /> <button onClick={(e) => this.createCharacter(e)}>Create</button>
+        </div>
+      </div>
+    )
+  }
+
+}
+
+class App extends Component {
+  render() {
+    return (
+      <Router>
+        <div>
+          <Route exact path="/" component={HomePage} />
+          <Route exact path="/char/:id" component={CharPage} />
+          <Route exact path="/char/addMove/:id" component={AddMovePage} />
+        </div>
+      </Router>
+    )
+  }
+}
+
+const mapStateToProps = state => ({
+  characters: state.characters
+})
+
+const HomeConnected = connect()(Home);
+const HomePage = connect(mapStateToProps)(HomeConnected);
+
+const CharPageConnected = connect()(CharacterPage);
+const CharPage = connect(mapStateToProps)(CharPageConnected);
+
+const AddMoveConnected = connect()(AddMove);
+const AddMovePage = connect(mapStateToProps)(AddMoveConnected);
 
 export default App;
