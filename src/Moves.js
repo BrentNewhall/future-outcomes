@@ -195,6 +195,48 @@ export const moves = [
         ],
         lastNegative: 3,
     },
+    {
+        id: "chameleon-suit",
+        title: "Chameleon Suit",
+        description: "You must make this Move when activating the suit.",
+        outcomes: [
+            "Nothing happens.",
+            "Nothing happens.",
+            "The suit sparks, giving away your position, and does nothing.",
+            "The suit sparks, giving away your position, but you go invisible for 6 turns (30 seconds).",
+            "You go invisible for 5 minutes.",
+            "You go invisible for 1 hour.",
+        ],
+        lastNegative: 3,
+    },
+    {
+        id: "explosives",
+        title: "Explosives",
+        description: "You carry 6 hand grenades and 2 larger explosives.",
+        outcomes: [
+            "The explosive backfires. You and 1 nearby ally are _hurt_.",
+            "The explosive backfires. You are _hurt_.",
+            "The explosive does not have its intended effect.",
+            "The explosive goes off, alerting enemies to your presence.",
+            "The explosive goes off.",
+            "Massive explosion! Yee-haw!",
+        ],
+        lastNegative: 3,
+    },
+    {
+        id: "needle-rays",
+        title: "Needle Rays",
+        description: "These are precision beams of energy that can be dialed up or down in intensity, from a simple heat beam of about 100 C to a powerful laser.",
+        outcomes: [
+            "Your needler is out of charge.",
+            "You miss the target and hit something important.",
+            "Your beam fires either too hot or too mild.",
+            "You _hurt_ the target.",
+            "You _hurt_ the target.",
+            "You use the ray with great precision, dealing tremendous damage or cutting with great detail.",
+        ],
+        lastNegative: 3,
+    },
 ];
 
 export default moves;
