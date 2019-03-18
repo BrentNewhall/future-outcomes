@@ -222,6 +222,10 @@ class CharacterPage extends Component {
                     <Outcome id={this.state.moves[this.state.moves.length-1]} addLuckPoint={this.addLuckPoint} />
                   </div> );
     }
+    let redeemClasses = "RedeemButton";
+    if( this.state.luckPoints === 0 ) {
+      redeemClasses += " Disabled";
+    }
     return (
       <div className="App">
         <div className="container">
@@ -229,7 +233,7 @@ class CharacterPage extends Component {
             <h1>{this.state.name}</h1>
           </header>
           <nav><Link to="/">Home</Link></nav>
-          <aside>Luck: {this.state.luckPoints}</aside>
+          <aside>Luck: {this.state.luckPoints}<button className={redeemClasses}>Redeem</button></aside>
           {moves}
           <Link className="btn" to={"/char/addMove/" + this.props.match.params.id}>Add Move</Link><br />
           <button className="btn red" onClick={(e) => this.deleteCharacter()}>Delete</button>

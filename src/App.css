@@ -23,6 +23,15 @@
   width: 100%;
 }
 
+.RedeemButton {
+  margin-left: 10px;
+  color: green;
+}
+
+.RedeemButton.Disabled {
+  color: gray;
+}
+
 .bad {
   color: gray;
 }
