@@ -60,6 +60,10 @@ td {
   padding: 3px;
 }
 
+td > p {
+  margin: 0px;
+}
+
 a {
   font-size: 150%;
 }

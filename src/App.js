@@ -15,6 +15,8 @@ import {
   deleteCharacter
 } from './actions.js';
 
+const ReactMarkdown = require( 'react-markdown' );
+
 class OutcomeRows extends Component {
   render() {
     let outcomes = this.props.move.outcomes.map( (outcome, index) => {
@@ -22,7 +24,7 @@ class OutcomeRows extends Component {
       if( index >= this.props.move.lastNegative ) {
         specialClass = 'good';
       }
-      return <tr key={'move' + this.props.move.id + '.' + index}><td className={'OutcomeNumber ' + specialClass}>{index+1}</td><td className={'OutcomeDescription ' + this.props.highlights[index] + ' ' + specialClass} onClick={(e) => this.props.outcomeClickHandler(e)}>{outcome}</td></tr>;
+      return <tr key={'move' + this.props.move.id + '.' + index}><td className={'OutcomeNumber ' + specialClass}>{index+1}</td><td className={'OutcomeDescription ' + this.props.highlights[index] + ' ' + specialClass} onClick={(e) => this.props.outcomeClickHandler(e)}><ReactMarkdown source={outcome} /></td></tr>;
     });
     return outcomes;
   }
@@ -33,6 +35,7 @@ class AddMove extends Component {
     super( props );
     this.outcomeClicked = this.outcomeClicked.bind( this );
   }
+
   moveSelected( moveID ) {
     let characters = this.props.characters;
     characters[this.props.match.params.id].moves.push( moveID );
