@@ -65,6 +65,11 @@
   margin: 0 auto;
 }
 
+.ConditionButton {
+  background: none;
+  border: 0px;
+}
+
 nav {
   margin-bottom: 25px;
 }

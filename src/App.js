@@ -4,6 +4,8 @@ import {
   Route,
   Link
 } from 'react-router-dom';
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css'
 import { connect } from 'react-redux';
 import './App.css';
 
@@ -201,7 +203,9 @@ class ConditionColumn extends Component {
   render() {
     return (
       <div className="Condition">
-        <img src={this.props.src} className="ConditionImage" alt={this.props.condition} />
+        <button className="ConditionButton" onClick={(e) => this.props.confirm(this.props.condition)}>
+          <img src={this.props.src} className="ConditionImage" alt={this.props.condition} />
+        </button>
         {this.props.condition}
       </div>
     );
@@ -221,6 +225,7 @@ class CharacterPage extends Component {
     this.deleteCharacter = this.deleteCharacter.bind( this );
     this.updateStorageAfterDelete = this.updateStorageAfterDelete.bind( this );
     this.addLuckPoint = this.addLuckPoint.bind( this );
+    this.confirmClearCondition = this.confirmClearCondition.bind( this );
   }
 
   componentDidMount() {
@@ -248,7 +253,6 @@ class CharacterPage extends Component {
   }
 
   addMove() {
-
   }
 
   addLuckPoint() {
@@ -257,6 +261,32 @@ class CharacterPage extends Component {
 
   redeemLuck(e) {
     this.setState( { luckPoints: this.state.luckPoints - 1 } );
+  }
+
+  confirmClearCondition(condition) {
+    console.log( "Confirming with condition", condition );  
+    const options = {
+      title: "Clear?",
+      message: "Are you sure you want to clear the " + condition + " condition?",
+      buttons: [
+        {
+          label: "Yes",
+          onClick: () => this.clearCondition( condition ),
+        },
+        {
+          label: "No",
+          onClick: null,
+        }
+      ]
+    };
+    confirmAlert( options );
+  }
+
+  clearCondition( condition ) {
+    let conditions = this.state.conditions.map( (c) => {
+      return (c === condition) ? null : c;
+    });
+    this.setState( { conditions } );
   }
 
   render() {
@@ -276,23 +306,23 @@ class CharacterPage extends Component {
     if( this.state.luckPoints === 0 ) {
       redeemClasses += " Disabled";
     }
-    let conditions = [];
     let hurt = 0;
-    this.state.conditions.forEach( (condition) => {
+    let conditions = [];
+    this.state.conditions.forEach( (condition, index) => {
       if( condition === 'hurt' ) {
         hurt++;
       }
       else if( condition === "distracted" ) {
-        conditions.push( <ConditionColumn src={conditionImages[0]} condition={condition} /> );
+        conditions.push( <ConditionColumn key={index} src={conditionImages[0]} condition={condition} confirm={this.confirmClearCondition} /> );
       }
       else if( condition === "immobilized" ) {
-        conditions.push( <ConditionColumn src={conditionImages[1]} condition={condition} /> );
+        conditions.push( <ConditionColumn key={index} src={conditionImages[1]} condition={condition} confirm={this.confirmClearCondition} /> );
       }
       else if( condition === "pumped" ) {
-        conditions.push( <ConditionColumn src={conditionImages[2]} condition={condition} /> );
+        conditions.push( <ConditionColumn key={index} src={conditionImages[2]} condition={condition} confirm={this.confirmClearCondition} /> );
       }
       else if( condition === "stunned" ) {
-        conditions.push( <ConditionColumn src={conditionImages[3]} condition={condition} /> );
+        conditions.push( <ConditionColumn key={index} src={conditionImages[3]} condition={condition} confirm={this.confirmClearCondition} /> );
       }
     });
     const hurtStyle = {
@@ -307,7 +337,7 @@ class CharacterPage extends Component {
           </header>
           <div className="Conditions">{conditions}</div>
           Hurt:
-          <div class="progress"><div class="determinate" style={hurtStyle}></div></div>
+          <div className="progress"><div className="determinate" style={hurtStyle}></div></div>
           <aside>Luck: {this.state.luckPoints}<button className={redeemClasses} onClick={(e) => this.redeemLuck(e)}>Redeem</button></aside>
           {moves}
           <Link className="btn" to={"/char/addMove/" + this.props.match.params.id}>Add Move</Link><br />

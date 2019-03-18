@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "react": "^16.8.4",
+    "react-confirm-alert": "^2.3.0",
     "react-dom": "^16.8.4",
     "react-markdown": "^4.0.6",
     "react-materialize": "^2.6.0",
