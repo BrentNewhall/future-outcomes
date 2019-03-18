@@ -40,6 +40,31 @@
   background-color: antiquewhite;
 }
 
+.progress {
+  background-color: #ddd;
+  height: 10px;
+}
+
+.Conditions {
+  display: flex;
+
+}
+
+.Condition {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  text-align: center;
+  text-transform: capitalize;
+}
+
+.ConditionImage {
+  width: 10vw;
+  height: 10vw;
+  display: block;
+  margin: 0 auto;
+}
+
 nav {
   margin-bottom: 25px;
 }

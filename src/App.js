@@ -14,6 +14,7 @@ import {
   setCharacters,
   deleteCharacter
 } from './actions.js';
+import conditionImages from './Images.js';
 
 const ReactMarkdown = require( 'react-markdown' );
 
@@ -24,7 +25,10 @@ class OutcomeRows extends Component {
       if( index >= this.props.move.lastNegative ) {
         specialClass = 'good';
       }
-      return <tr key={'move' + this.props.move.id + '.' + index}><td className={'OutcomeNumber ' + specialClass}>{index+1}</td><td className={'OutcomeDescription ' + this.props.highlights[index] + ' ' + specialClass} onClick={(e) => this.props.outcomeClickHandler(e)}><ReactMarkdown source={outcome} /></td></tr>;
+      return <tr key={'move' + this.props.move.id + '.' + index}>
+               <td className={'OutcomeNumber ' + specialClass}>{index+1}</td>
+               <td className={'OutcomeDescription ' + this.props.highlights[index] + ' ' + specialClass} onClick={(e) => this.props.outcomeClickHandler(e)}><ReactMarkdown source={outcome} /></td>
+             </tr>;
     });
     return outcomes;
   }
@@ -193,6 +197,17 @@ class Outcome extends Component {
   }
 }
 
+class ConditionColumn extends Component {
+  render() {
+    return (
+      <div className="Condition">
+        <img src={this.props.src} className="ConditionImage" alt={this.props.condition} />
+        {this.props.condition}
+      </div>
+    );
+  }
+}
+
 class CharacterPage extends Component {
   constructor( props ) {
     super( props );
@@ -200,6 +215,7 @@ class CharacterPage extends Component {
       name: '',
       moves: [],
       luckPoints: 0,
+      conditions: [],
     }
     this.redirect = false;
     this.deleteCharacter = this.deleteCharacter.bind( this );
@@ -212,6 +228,7 @@ class CharacterPage extends Component {
       name: store.getState().characters[this.props.match.params.id].name,
       moves: store.getState().characters[this.props.match.params.id].moves,
       luckPoints: store.getState().characters[this.props.match.params.id].luckPoints,
+      conditions: ["hurt","hurt","distracted","immobilized","pumped","stunned"],
     } );
   }
 
@@ -259,13 +276,38 @@ class CharacterPage extends Component {
     if( this.state.luckPoints === 0 ) {
       redeemClasses += " Disabled";
     }
+    let conditions = [];
+    let hurt = 0;
+    this.state.conditions.forEach( (condition) => {
+      if( condition === 'hurt' ) {
+        hurt++;
+      }
+      else if( condition === "distracted" ) {
+        conditions.push( <ConditionColumn src={conditionImages[0]} condition={condition} /> );
+      }
+      else if( condition === "immobilized" ) {
+        conditions.push( <ConditionColumn src={conditionImages[1]} condition={condition} /> );
+      }
+      else if( condition === "pumped" ) {
+        conditions.push( <ConditionColumn src={conditionImages[2]} condition={condition} /> );
+      }
+      else if( condition === "stunned" ) {
+        conditions.push( <ConditionColumn src={conditionImages[3]} condition={condition} /> );
+      }
+    });
+    const hurtStyle = {
+      width: parseInt(hurt / 5 * 100).toString() + "%"
+    }
     return (
       <div className="App">
+        <nav><Link to="/">Home</Link></nav>
         <div className="container">
           <header>
             <h1>{this.state.name}</h1>
           </header>
-          <nav><Link to="/">Home</Link></nav>
+          <div className="Conditions">{conditions}</div>
+          Hurt:
+          <div class="progress"><div class="determinate" style={hurtStyle}></div></div>
           <aside>Luck: {this.state.luckPoints}<button className={redeemClasses} onClick={(e) => this.redeemLuck(e)}>Redeem</button></aside>
           {moves}
           <Link className="btn" to={"/char/addMove/" + this.props.match.params.id}>Add Move</Link><br />
@@ -317,11 +359,11 @@ class Home extends Component {
     }
     return (
       <div className="App">
+        <nav><Link to="/">Home</Link></nav>
         <div className="container">
           <header>
             <h1>Future Outcome</h1>
           </header>
-          <nav><Link to="/">Home</Link></nav>
           <h2>Characters</h2>
           <ul>
             {characters}
