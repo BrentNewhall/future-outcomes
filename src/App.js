@@ -96,10 +96,17 @@ class Outcome extends Component {
     this.id = props.id;
     this.outcomeClicked = this.outcomeClicked.bind( this );
     this.outcomeClickHandler = this.outcomeClickHandler.bind( this );
+    this.redeemLuck = this.redeemLuck.bind( this );
   }
 
   componentDidMount() {
     this.generateOutcomes();
+  }
+
+  componentDidUpdate( prevProps, prevState, snapshot ) {
+    if( this.props.luck < prevProps.luck  &&  this.highlights.includes("highlight") ) {
+      this.redeemLuck();
+    }
   }
 
   outcomeClickHandler( event ) {
@@ -121,7 +128,7 @@ class Outcome extends Component {
   generateOutcomes() {
     moves.forEach( (move) => {
       if( move.id === this.id ) {
-        let outcomes = <OutcomeRows move={move} highlights={this.highlights} outcomeClickHandler={this.outcomeClickHandler} />;
+        let outcomes = <OutcomeRows move={move} highlights={this.highlights} outcomeClickHandler={this.outcomeClickHandler} redeemLuck={this.redeemLuck} />;
         this.setState( { title: move.title, content: outcomes } );
       }
     });
@@ -138,6 +145,25 @@ class Outcome extends Component {
     }
     this.highlights[outcome1] = 'highlight';
     this.highlights[outcome2] = 'highlight';
+    this.generateOutcomes();
+  }
+
+  redeemLuck() {
+    if( this.highlights[4] !== ''  &&  this.highlights[5] !== '' ) {
+      return;
+    }
+    if( this.highlights[3] !== ''  &&  this.highlights[5] !== '' ) {
+      this.highlights[3] = '';
+      this.highlights[4] = 'highlight';
+    }
+    else {
+      for( let index = 4; index >= 0; index-- ) {
+        if( this.highlights[index] === 'highlight' ) {
+          this.highlights[index+1] = 'highlight';
+          this.highlights[index] = '';
+        }
+      }
+    }
     this.generateOutcomes();
   }
 
@@ -209,17 +235,21 @@ class CharacterPage extends Component {
     this.setState( { luckPoints: this.state.luckPoints + 1 } );
   }
 
+  redeemLuck(e) {
+    this.setState( { luckPoints: this.state.luckPoints - 1 } );
+  }
+
   render() {
     let moves = [];
     for( let moveIndex = 0; moveIndex < this.state.moves.length - 1; moveIndex += 2 ) {
       moves.push( <div className="row" key={moveIndex}>
-                    <Outcome id={this.state.moves[moveIndex]} addLuckPoint={this.addLuckPoint} />
-                    <Outcome id={this.state.moves[moveIndex+1]} addLuckPoint={this.addLuckPoint} />
+                    <Outcome id={this.state.moves[moveIndex]} addLuckPoint={this.addLuckPoint} luck={this.state.luckPoints} />
+                    <Outcome id={this.state.moves[moveIndex+1]} addLuckPoint={this.addLuckPoint} luck={this.state.luckPoints} />
                   </div> );
     }
     if( this.state.moves.length % 2 !== 0 ) {
       moves.push( <div className="row" key={this.state.moves.length}>
-                    <Outcome id={this.state.moves[this.state.moves.length-1]} addLuckPoint={this.addLuckPoint} />
+                    <Outcome id={this.state.moves[this.state.moves.length-1]} addLuckPoint={this.addLuckPoint} luck={this.state.luckPoints} />
                   </div> );
     }
     let redeemClasses = "RedeemButton";
@@ -233,7 +263,7 @@ class CharacterPage extends Component {
             <h1>{this.state.name}</h1>
           </header>
           <nav><Link to="/">Home</Link></nav>
-          <aside>Luck: {this.state.luckPoints}<button className={redeemClasses}>Redeem</button></aside>
+          <aside>Luck: {this.state.luckPoints}<button className={redeemClasses} onClick={(e) => this.redeemLuck(e)}>Redeem</button></aside>
           {moves}
           <Link className="btn" to={"/char/addMove/" + this.props.match.params.id}>Add Move</Link><br />
           <button className="btn red" onClick={(e) => this.deleteCharacter()}>Delete</button>
