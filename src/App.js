@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-  BrowserRouter as Router,
+  HashRouter as Router,
   Route,
   Link
 } from 'react-router-dom';
@@ -338,8 +338,9 @@ class App extends Component {
       <Router>
         <div>
           <Route exact path="/" component={HomePage} />
-          <Route exact path="/char/:id" component={CharPage} />
-          <Route exact path="/char/addMove/:id" component={AddMovePage} />
+          <Route path="/home" component={HomePage} />
+          <Route path="/char/:id" component={CharPage} />
+          <Route path="/char/addMove/:id" component={AddMovePage} />
         </div>
       </Router>
     )
