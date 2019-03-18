@@ -15,19 +15,24 @@ import {
   deleteCharacter
 } from './actions.js';
 
-const getOutcomeRows = (move, highlights) => {
-  let outcomes = [];
-  move.outcomes.forEach( (outcome, index) => {
-    let specialClass = 'bad';
-    if( index >= move.lastNegative ) {
-      specialClass = 'good';
-    }
-    outcomes.push( <tr key={'move' + move.id + '.' + index}><td key={move.id + 'movevalue' + index} className={'OutcomeNumber ' + specialClass}>{index+1}</td><td key={move.id + 'movedesc' + index} className={'OutcomeDescription ' + highlights[index]}>{outcome}</td></tr> );
-  });
-  return outcomes;
+class OutcomeRows extends Component {
+  render() {
+    let outcomes = this.props.move.outcomes.map( (outcome, index) => {
+      let specialClass = 'bad';
+      if( index >= this.props.move.lastNegative ) {
+        specialClass = 'good';
+      }
+      return <tr key={'move' + this.props.move.id + '.' + index}><td className={'OutcomeNumber ' + specialClass}>{index+1}</td><td className={'OutcomeDescription ' + this.props.highlights[index] + ' ' + specialClass} onClick={(e) => this.props.outcomeClickHandler(e)}>{outcome}</td></tr>;
+    });
+    return outcomes;
+  }
 }
 
 class AddMove extends Component {
+  constructor( props ) {
+    super( props );
+    this.outcomeClicked = this.outcomeClicked.bind( this );
+  }
   moveSelected( moveID ) {
     let characters = this.props.characters;
     characters[this.props.match.params.id].moves.push( moveID );
@@ -36,6 +41,10 @@ class AddMove extends Component {
       resolve();
     });
     setCharacters().then( this.props.history.push( "/char/" + this.props.match.params.id ) );
+  }
+
+  outcomeClicked( event ) {
+    return;
   }
 
   render() {
@@ -47,7 +56,6 @@ class AddMove extends Component {
       if( move.description ) {
         description = <em>{move.description}</em>
       }
-      let outcomes = getOutcomeRows( move, [] );
       return( <div key={moveIndex} className="Outcome col m6">
                 <div className="OutcomeTitle">
                   <button className='OutcomeButton btn' onClick={(e) => this.moveSelected(move.id)}>
@@ -58,7 +66,7 @@ class AddMove extends Component {
                   {description}
                   <table>
                   <thead><tr><th>Roll</th><th>Outcome</th></tr></thead>
-                  <tbody>{outcomes}</tbody>
+                  <tbody><OutcomeRows move={move} highlights={[]} outcomeClickedHandler={this.outcomeClicked()} /></tbody>
                   </table>
                 </div>
               </div> );
@@ -87,16 +95,33 @@ class Outcome extends Component {
     this.highlights = ['','','','','',''];
     this.id = props.id;
     this.outcomeClicked = this.outcomeClicked.bind( this );
+    this.outcomeClickHandler = this.outcomeClickHandler.bind( this );
   }
 
   componentDidMount() {
     this.generateOutcomes();
   }
 
+  outcomeClickHandler( event ) {
+    // Only update if this is a highlighted row
+    if( ! event.target.getAttribute("class").includes( "highlight" ) ) {
+      return;
+    }
+    // If this is a bad row, increase luck
+    if( event.target.getAttribute("class").includes( "bad" ) ) {
+      this.props.addLuckPoint();
+    }
+    // Clear all selected outcomes
+    for( let index in this.highlights ) {
+      this.highlights[index] = '';
+    }
+    this.generateOutcomes();
+  }
+
   generateOutcomes() {
     moves.forEach( (move) => {
       if( move.id === this.id ) {
-        let outcomes = getOutcomeRows( move, this.highlights );
+        let outcomes = <OutcomeRows move={move} highlights={this.highlights} outcomeClickHandler={this.outcomeClickHandler} />;
         this.setState( { title: move.title, content: outcomes } );
       }
     });
@@ -118,7 +143,7 @@ class Outcome extends Component {
 
   render() {
     let tbodyContent = [];
-    if (this.state.content.length>0){
+    if( typeof this.state.content === "object" ) {
       tbodyContent = this.state.content;
     }
     return (
@@ -150,6 +175,7 @@ class CharacterPage extends Component {
     this.redirect = false;
     this.deleteCharacter = this.deleteCharacter.bind( this );
     this.updateStorageAfterDelete = this.updateStorageAfterDelete.bind( this );
+    this.addLuckPoint = this.addLuckPoint.bind( this );
   }
 
   componentDidMount() {
@@ -179,17 +205,21 @@ class CharacterPage extends Component {
 
   }
 
+  addLuckPoint() {
+    this.setState( { luckPoints: this.state.luckPoints + 1 } );
+  }
+
   render() {
     let moves = [];
     for( let moveIndex = 0; moveIndex < this.state.moves.length - 1; moveIndex += 2 ) {
       moves.push( <div className="row" key={moveIndex}>
-                    <Outcome id={this.state.moves[moveIndex]} />
-                    <Outcome id={this.state.moves[moveIndex+1]}/>
+                    <Outcome id={this.state.moves[moveIndex]} addLuckPoint={this.addLuckPoint} />
+                    <Outcome id={this.state.moves[moveIndex+1]} addLuckPoint={this.addLuckPoint} />
                   </div> );
     }
     if( this.state.moves.length % 2 !== 0 ) {
       moves.push( <div className="row" key={this.state.moves.length}>
-                    <Outcome id={this.state.moves[this.state.moves.length-1]}/>
+                    <Outcome id={this.state.moves[this.state.moves.length-1]} addLuckPoint={this.addLuckPoint} />
                   </div> );
     }
     return (
