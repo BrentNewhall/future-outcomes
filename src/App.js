@@ -18,7 +18,7 @@ import {
 } from './actions.js';
 import conditionImages from './Images.js';
 
-const ReactMarkdown = require( 'react-markdown' );
+//const ReactMarkdown = require( 'react-markdown' );
 
 class ConditionRow extends Component {
   render() {
@@ -324,6 +324,25 @@ class CharacterPage extends Component {
     this.setState( { luckPoints: this.state.luckPoints - 1 } );
   }
 
+  addHurt() {
+    let numHurts = 0;
+    for( let c of this.state.conditions ) {
+      if( c === "hurt" ) { numHurts++; }
+    }
+    if( numHurts < 5 ) {
+      this.setState( { conditions: [...this.state.conditions, 'hurt' ] } );
+    }
+  }
+
+  removeHurt() {
+    if( this.state.conditions.includes( "hurt" ) ) {
+      let conditions = this.state.conditions;
+      const pos = conditions.indexOf( "hurt" );
+      conditions.splice( pos, 1 );
+      this.setState( { conditions } );
+    }
+  }
+
   confirmClearCondition(condition) {
     const options = {
       title: "Clear?",
@@ -399,6 +418,8 @@ class CharacterPage extends Component {
           <Link className="btn" to={"/char/addCondition/" + this.props.match.params.id}>Add Condition</Link><br />
           Hurt:
           <div className="progress"><div className="determinate" style={hurtStyle}></div></div>
+          <button onClick={() => this.removeHurt()}>-</button>
+          <button onClick={() => this.addHurt()}>+</button>
           <aside>Luck: {this.state.luckPoints}<button className={redeemClasses} onClick={(e) => this.redeemLuck(e)}>Redeem</button></aside>
           {moves}
           <Link className="btn" to={"/char/addMove/" + this.props.match.params.id}>Add Move</Link><br />
