@@ -86,6 +86,10 @@ class OutcomeRows extends Component {
   }
 }
 
+function capFirstLetter( text ) {
+  return text.charAt(0).toUpperCase() + text.slice(1);
+}
+
 class AddMove extends Component {
   constructor( props ) {
     super( props );
@@ -107,15 +111,22 @@ class AddMove extends Component {
   }
 
   render() {
+    let lastType = '';
     let tables = moves.map( (move,moveIndex) => {
       if( this.props.characters[this.props.match.params.id].moves.indexOf( move.id ) >= 0 ) {
         return <div key={moveIndex}></div>;
       }
+      let headerText = '';
+      if( move.type !== lastType ) {
+        headerText = <h2>{capFirstLetter(move.type)} Moves</h2>;
+      }
+      lastType = move.type;
       let description = '';
       if( move.description ) {
         description = <em>{move.description}</em>
       }
       return( <div key={moveIndex} className="Outcome col m6">
+                {headerText}
                 <div className="OutcomeTitle">
                   <button className='OutcomeButton btn' onClick={(e) => this.moveSelected(move.id)}>
                     {move.title}
