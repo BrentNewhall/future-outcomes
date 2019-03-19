@@ -79,7 +79,7 @@ class OutcomeRows extends Component {
       }
       return <tr key={'move' + this.props.move.id + '.' + index}>
                <td className={'OutcomeNumber ' + specialClass}>{index+1}</td>
-               <td className={'OutcomeDescription ' + this.props.highlights[index] + ' ' + specialClass} onClick={(e) => this.props.outcomeClickHandler(e)}><ReactMarkdown source={outcome} /></td>
+               <td className={'OutcomeDescription ' + this.props.highlights[index] + ' ' + specialClass} onClick={(e) => this.props.outcomeClickHandler(e)}>{outcome}</td>
              </tr>;
     });
     return outcomes;
