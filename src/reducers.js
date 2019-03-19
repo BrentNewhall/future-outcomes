@@ -4,14 +4,14 @@ const DEFAULT_STATE = {
     characters: [
         {
             name: 'Virgil',
-            moves: ['default', 'physical-combat'],
+            moves: ['default', 'physical-combat', 'negotiation'],
             luckPoints: 0,
+            conditions: [],
         }
     ]
 }
 
 export default function charReducer( state = DEFAULT_STATE, action ) {
-    console.log( "In charReducer. Payload is ", action.payload );
     switch( action.type ) {
         case CREATE_CHAR:
             return {

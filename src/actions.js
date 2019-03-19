@@ -1,13 +1,14 @@
 import { CREATE_CHAR, SET_CHARS, DELETE_CHAR } from './constants.js';
 
-export function createNewCharacter( name, moves, luckPoints ) {
+export function createNewCharacter( name, moves, luckPoints, conditions ) {
     console.log( "In createNewCharacter() (action)")
     return {
         type: CREATE_CHAR,
         payload: {
             name,
             moves,
-            luckPoints
+            luckPoints,
+            conditions
         }
     }
 }

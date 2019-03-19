@@ -24,15 +24,32 @@ class ConditionRow extends Component {
   render() {
     return(
       <div className="Condition">
-        <img className="ConditionImage" src={conditionImages[this.props.index]} alt={this.props.condition} /><br />
+        <button onClick={(e) => this.props.handleClick(this.props.condition)}>
+          <img className="ConditionImage" src={conditionImages[this.props.index]} alt={this.props.condition} /><br />
           <p><strong>{this.props.condition}</strong></p>
           <p className="ConditionDescription">{this.props.description}</p>
+        </button>
       </div>
     );
   }
 }
 
 class AddCondition extends Component {
+  constructor( props ) {
+    super( props );
+    this.conditionSelected = this.conditionSelected.bind( this );
+  }
+  
+  conditionSelected( condition ) {
+    let characters = this.props.characters;
+    characters[this.props.match.params.id].conditions.push( condition );
+    const setCharacters = () => new Promise( (resolve, reject) => {
+      localStorage.setItem( "characters", characters );
+      resolve();
+    });
+    setCharacters().then( this.props.history.push( "/char/" + this.props.match.params.id ) );
+  }
+
   render() {
     return( 
       <div className="App">
@@ -42,10 +59,10 @@ class AddCondition extends Component {
             <h1>Add Condition</h1>
           </header>
           <div className="Conditions">
-          <ConditionRow index='0' condition='distracted' description="You have difficulty focusing." />
-          <ConditionRow index='1' condition='immobilized' description="You're rooted to the spot." />
-          <ConditionRow index='2' condition='pumped' description="You're on fire! Not literally." />
-          <ConditionRow index='3' condition='stunned' description="You can barely think." />
+          <ConditionRow index='0' condition='distracted' description="You have difficulty focusing." handleClick={this.conditionSelected} />
+          <ConditionRow index='1' condition='immobilized' description="You're rooted to the spot." handleClick={this.conditionSelected} />
+          <ConditionRow index='2' condition='pumped' description="You're on fire! Not literally." handleClick={this.conditionSelected} />
+          <ConditionRow index='3' condition='stunned' description="You can barely think." handleClick={this.conditionSelected} />
           </div>
         </div>
       </div>
@@ -266,7 +283,7 @@ class CharacterPage extends Component {
       name: store.getState().characters[this.props.match.params.id].name,
       moves: store.getState().characters[this.props.match.params.id].moves,
       luckPoints: store.getState().characters[this.props.match.params.id].luckPoints,
-      conditions: ["hurt","hurt","distracted","immobilized","pumped","stunned"],
+      conditions: store.getState().characters[this.props.match.params.id].conditions,
     } );
   }
 
@@ -297,7 +314,6 @@ class CharacterPage extends Component {
   }
 
   confirmClearCondition(condition) {
-    console.log( "Confirming with condition", condition );  
     const options = {
       title: "Clear?",
       message: "Are you sure you want to clear the " + condition + " condition?",
@@ -408,7 +424,7 @@ class Home extends Component {
 
   createCharacter( evt ) {
     const addChar = () => new Promise( (resolve, reject) => {
-      store.dispatch( createNewCharacter(this.newCharName.current.value,['default','physical-combat','negotiation'],0) );
+      store.dispatch( createNewCharacter(this.newCharName.current.value,['default','physical-combat','negotiation'],0,[]) );
       resolve();
     })
     addChar().then( this.updateStorage );
