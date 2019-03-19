@@ -2,6 +2,7 @@ export const moves = [
     {
         id: "default",
         title: "Default Move",
+        type: "skill",
         outcomes: [
             "You fail.",
             "You fail.",
@@ -15,6 +16,7 @@ export const moves = [
     {
         id: "negotiation",
         title: "Negotiation",
+        type: "skill",
         outcomes: [
             "Negotiations fail. Violence begins.",
             "Negotiations fail. Parties offended.",
@@ -28,6 +30,7 @@ export const moves = [
     {
         id: "physical-combat",
         title: "Physical Combat",
+        type: "skill",
         outcomes: [
             "Your attack misses, and you are _hurt_.",
             "Your attack misses, and you are _stunned_.",
@@ -41,6 +44,7 @@ export const moves = [
     {
         id: "ace-pilot",
         title: "Ace Pilot",
+        type: "skill",
         outcomes: [
             "Your craft goes careening out of control.",
             "No change, but a complication occurs.",
@@ -54,6 +58,7 @@ export const moves = [
     {
         id: "blaster-master",
         title: "Blaster Master",
+        type: "skill",
         outcomes: [
             "Your attack misses, and the target gets away.",
             "You _hurt_ the target, and you are _hurt_.",
@@ -67,6 +72,7 @@ export const moves = [
     {
         id: "engineer",
         title: "Engineer",
+        type: "skill",
         outcomes: [
             "You fail, and something explodes.",
             "You fail, and something gets jammed.",
@@ -80,6 +86,7 @@ export const moves = [
     {
         id: "medic",
         title: "Medic",
+        type: "skill",
         outcomes: [
             "The target takes 1 extra _hurt_.",
             "The target is now _stunned_.",
@@ -93,6 +100,7 @@ export const moves = [
     {
         id: "infiltrator",
         title: "Infiltrator",
+        type: "skill",
         outcomes: [
             "You cannot enter, and enemies are alerted to your presence.",
             "You cannot enter, and enemies are alerted to your presence.",
@@ -106,6 +114,7 @@ export const moves = [
     {
         id: "learner-of-secrets",
         title: "Learner of Secrets",
+        type: "skill",
         description: "You may use this skill in research, physical investigation, conversation, or interrogation.",
         outcomes: [
             "You are _distracted_ for the next 2 turns.",
@@ -120,6 +129,7 @@ export const moves = [
     {
         id: "master-manipulator",
         title: "Master Manipulator",
+        type: "skill",
         outcomes: [
             "They refuse. Violence begins.",
             "They refuse. Parties offended.",
@@ -133,6 +143,7 @@ export const moves = [
     {
         id: "psychic-scanner",
         title: "Psychic Scanner",
+        type: "skill",
         outcomes: [
             "Psychic backlash; you are _hurt_.",
             "Learn the target's biggest secret.",
@@ -146,6 +157,7 @@ export const moves = [
     {
         id: "survivalist",
         title: "Survivalist",
+        type: "skill",
         outcomes: [
             "You lose your way and stumble into danger.",
             "You step in the wrong nest and take a random condition.",
@@ -159,6 +171,7 @@ export const moves = [
     {
         id: "telekinesis",
         title: "Telekinesis",
+        type: "skill",
         outcomes: [
             "Psychic backlash; you are _hurt_.",
             "Nothing happens, and you are _distracted_ next turn.",
@@ -172,6 +185,7 @@ export const moves = [
     {
         id: "trap-expert",
         title: "Trap Expert",
+        type: "skill",
         outcomes: [
             "The trap explodes. You are _hurt_, and so is another nearby person (choose randomly).",
             "The trap explodes. You are _hurt_.",
@@ -185,6 +199,7 @@ export const moves = [
     {
         id: "wild-courage",
         title: "Wild Courage",
+        type: "skill",
         outcomes: [
             "You fail and suffer a serious setback.",
             "You fail and suffer a significant setback.",
@@ -199,6 +214,7 @@ export const moves = [
         id: "chameleon-suit",
         title: "Chameleon Suit",
         description: "You must make this Move when activating the suit.",
+        type: "equipment",
         outcomes: [
             "Nothing happens.",
             "Nothing happens.",
@@ -213,6 +229,7 @@ export const moves = [
         id: "explosives",
         title: "Explosives",
         description: "You carry 6 hand grenades and 2 larger explosives.",
+        type: "equipment",
         outcomes: [
             "The explosive backfires. You and 1 nearby ally are _hurt_.",
             "The explosive backfires. You are _hurt_.",
@@ -227,6 +244,7 @@ export const moves = [
         id: "needle-rays",
         title: "Needle Rays",
         description: "These are precision beams of energy that can be dialed up or down in intensity, from a simple heat beam of about 100 C to a powerful laser.",
+        type: "equipment",
         outcomes: [
             "Your needler is out of charge.",
             "You miss the target and hit something important.",
@@ -234,6 +252,62 @@ export const moves = [
             "You _hurt_ the target.",
             "You _hurt_ the target.",
             "You use the ray with great precision, dealing tremendous damage or cutting with great detail.",
+        ],
+        lastNegative: 3,
+    },
+    {
+        id: "pulse-rifle",
+        title: "Pulse Rifle",
+        type: "equipment",
+        outcomes: [
+            "You miss the target, and you are _hurt_.",
+            "You miss the target, and you are _stunned_.",
+            "Your attack misses.",
+            "You _hurt_ the target, but you are _stunned_ next turn.",
+            "You _hurt_ the target.",
+            "You _hurt_ the target twice.",
+        ],
+        lastNegative: 3,
+    },
+    {
+        id: "seeker-droid",
+        title: "Seeker Droid",
+        type: "equipment",
+        outcomes: [
+            "You learn nothing, and a danger is alerted.",
+            "You learn nothing.",
+            "You learn an important detail, and a danger is alerted.",
+            "You discover a danger, which is alerted to your presence.",
+            "You discover a danger.",
+            "You discover a danger, and an important detail about it.",
+        ],
+        lastNegative: 3,
+    },
+    {
+        id: "stimpack",
+        title: "Stimpack",
+        type: "equipment",
+        outcomes: [
+            "Blacklash! You are _hurt_.",
+            "You are _distracted_ for 2 turns.",
+            "You are _stunned_ for 2 turns.",
+            "Heal 1 _hurt_.",
+            "Heal 1 condition of your choice.",
+            "Heal 1 hurt, and you are _pumped_ for the next 6 turns (30 seconds).",
+        ],
+        lastNegative: 3,
+    },
+    {
+        id: "vibro-knife",
+        title: "Vibro Knife",
+        type: "equipment",
+        outcomes: [
+            "You miss the target, and you are _hurt_.",
+            "You miss the target, and you are _hurt_.",
+            "You _hurt_ your target, and you are _hurt_.",
+            "You _hurt_ your target.",
+            "You _hurt_ your target, who is also _stunned_.",
+            "You _hurt_ your target, who flees in terror.",
         ],
         lastNegative: 3,
     },
