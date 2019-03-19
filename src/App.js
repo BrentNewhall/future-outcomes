@@ -23,12 +23,10 @@ const ReactMarkdown = require( 'react-markdown' );
 class ConditionRow extends Component {
   render() {
     return(
-      <div className="ConditionRow">
-        <img className="ConditionColumnImage" src={conditionImages[this.props.index]} alt={this.props.condition} />
-        <div className="ConditionColumn">
+      <div className="Condition">
+        <img className="ConditionImage" src={conditionImages[this.props.index]} alt={this.props.condition} /><br />
           <p><strong>{this.props.condition}</strong></p>
-          <p>{this.props.description}</p>
-        </div>
+          <p className="ConditionDescription">{this.props.description}</p>
       </div>
     );
   }
@@ -43,10 +41,12 @@ class AddCondition extends Component {
           <header>
             <h1>Add Condition</h1>
           </header>
+          <div className="Conditions">
           <ConditionRow index='0' condition='distracted' description="You have difficulty focusing." />
           <ConditionRow index='1' condition='immobilized' description="You're rooted to the spot." />
-          <ConditionRow index='0' condition='pumped' description="You're on fire! Not literally." />
-          <ConditionRow index='0' condition='stunned' description="You can barely think." />
+          <ConditionRow index='2' condition='pumped' description="You're on fire! Not literally." />
+          <ConditionRow index='3' condition='stunned' description="You can barely think." />
+          </div>
         </div>
       </div>
     );
@@ -369,6 +369,7 @@ class CharacterPage extends Component {
             <h1>{this.state.name}</h1>
           </header>
           <div className="Conditions">{conditions}</div>
+          <Link className="btn" to={"/char/addCondition/" + this.props.match.params.id}>Add Condition</Link><br />
           Hurt:
           <div className="progress"><div className="determinate" style={hurtStyle}></div></div>
           <aside>Luck: {this.state.luckPoints}<button className={redeemClasses} onClick={(e) => this.redeemLuck(e)}>Redeem</button></aside>
