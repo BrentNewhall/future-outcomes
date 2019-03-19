@@ -20,6 +20,39 @@ import conditionImages from './Images.js';
 
 const ReactMarkdown = require( 'react-markdown' );
 
+class ConditionRow extends Component {
+  render() {
+    return(
+      <div className="ConditionRow">
+        <img className="ConditionColumnImage" src={conditionImages[this.props.index]} alt={this.props.condition} />
+        <div className="ConditionColumn">
+          <p><strong>{this.props.condition}</strong></p>
+          <p>{this.props.description}</p>
+        </div>
+      </div>
+    );
+  }
+}
+
+class AddCondition extends Component {
+  render() {
+    return( 
+      <div className="App">
+        <nav><Link to="/">Home</Link></nav>
+        <div className="container">
+          <header>
+            <h1>Add Condition</h1>
+          </header>
+          <ConditionRow index='0' condition='distracted' description="You have difficulty focusing." />
+          <ConditionRow index='1' condition='immobilized' description="You're rooted to the spot." />
+          <ConditionRow index='0' condition='pumped' description="You're on fire! Not literally." />
+          <ConditionRow index='0' condition='stunned' description="You can barely think." />
+        </div>
+      </div>
+    );
+  }
+}
+
 class OutcomeRows extends Component {
   render() {
     let outcomes = this.props.move.outcomes.map( (outcome, index) => {
@@ -41,7 +74,7 @@ class AddMove extends Component {
     super( props );
     this.outcomeClicked = this.outcomeClicked.bind( this );
   }
-
+  
   moveSelected( moveID ) {
     let characters = this.props.characters;
     characters[this.props.match.params.id].moves.push( moveID );
@@ -82,11 +115,11 @@ class AddMove extends Component {
     });
     return( 
       <div className="App">
+        <nav><Link to="/">Home</Link></nav>
         <div className="container">
           <header>
             <h1>Add Move</h1>
           </header>
-          <nav><Link to="/">Home</Link></nav>
           {tables}
         </div>
       </div>
@@ -416,6 +449,7 @@ class App extends Component {
           <Route path="/home" component={HomePage} />
           <Route path="/char/:id" component={CharPage} />
           <Route path="/char/addMove/:id" component={AddMovePage} />
+          <Route path="/char/addCondition/:id" component={AddConditionPage} />
         </div>
       </Router>
     )
@@ -434,5 +468,8 @@ const CharPage = connect(mapStateToProps)(CharPageConnected);
 
 const AddMoveConnected = connect()(AddMove);
 const AddMovePage = connect(mapStateToProps)(AddMoveConnected);
+
+const AddConditionConnected = connect()(AddCondition);
+const AddConditionPage = connect(mapStateToProps)(AddConditionConnected);
 
 export default App;

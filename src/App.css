@@ -65,6 +65,23 @@
   margin: 0 auto;
 }
 
+.ConditionRow {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.ConditionColumnImage {
+  display: flex;
+  width: 10vw;
+  height: 10vw;
+}
+
+.ConditionColumn {
+  display: flex;
+  flex-grow: 4;
+}
+
 .ConditionButton {
   background: none;
   border: 0px;
