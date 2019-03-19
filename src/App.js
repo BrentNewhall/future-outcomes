@@ -463,10 +463,10 @@ class App extends Component {
       <Router>
         <div>
           <Route exact path="/" component={HomePage} />
-          <Route path="/home" component={HomePage} />
-          <Route path="/char/:id" component={CharPage} />
-          <Route path="/char/addMove/:id" component={AddMovePage} />
-          <Route path="/char/addCondition/:id" component={AddConditionPage} />
+          <Route exact path="/home" component={HomePage} />
+          <Route exact path="/char/:id" component={CharPage} />
+          <Route exact path="/char/addMove/:id" component={AddMovePage} />
+          <Route exact path="/char/addCondition/:id" component={AddConditionPage} />
         </div>
       </Router>
     )
