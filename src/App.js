@@ -418,8 +418,8 @@ class CharacterPage extends Component {
           <Link className="btn" to={"/char/addCondition/" + this.props.match.params.id}>Add Condition</Link><br />
           Hurt:
           <div className="progress"><div className="determinate" style={hurtStyle}></div></div>
-          <button onClick={() => this.removeHurt()}>-</button>
-          <button onClick={() => this.addHurt()}>+</button>
+          <button className="btn hurt" onClick={() => this.removeHurt()}>-</button>
+          <button className="btn hurt" onClick={() => this.addHurt()}>+</button>
           <aside>Luck: {this.state.luckPoints}<button className={redeemClasses} onClick={(e) => this.redeemLuck(e)}>Redeem</button></aside>
           {moves}
           <Link className="btn" to={"/char/addMove/" + this.props.match.params.id}>Add Move</Link><br />

@@ -73,6 +73,10 @@
   border: 0px;
 }
 
+.btn.hurt {
+  font-size: 150%;
+}
+
 nav {
   margin-bottom: 25px;
 }
