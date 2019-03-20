@@ -110,3 +110,18 @@ aside {
   text-align: right;
   font-size: 150%;
 }
+
+/* Materialize color scheme changes
+   using https://coolors.co/594157-726da8-7d8cc4-a0d2db-bee7e8 */
+
+nav {
+  background-color: #594157;
+}
+
+.btn {
+  background-color: #7D8CC4;
+}
+
+.progress .determinate {
+  background-color: rgb(165, 79, 79);
+}  
