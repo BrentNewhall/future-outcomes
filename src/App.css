@@ -125,6 +125,15 @@ aside {
 /* Materialize color scheme changes
    using https://coolors.co/594157-726da8-7d8cc4-a0d2db-bee7e8 */
 
+h1 {
+  font-size: 250%;
+}
+
+h2 {
+  font-size: 200%;
+  font-style: italic;
+}
+
 nav {
   background-color: #594157;
   padding-left: 10px;
@@ -132,6 +141,11 @@ nav {
 
 nav > a {
   margin-right: 10px;
+}
+
+.collapsible-header {
+  font-weight: bold;
+  font-size: 150%;
 }
 
 .btn {
