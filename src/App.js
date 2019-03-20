@@ -378,6 +378,14 @@ class CharacterPage extends Component {
       return (c === condition) ? null : c;
     });
     this.setState( { conditions } );
+    let characters = this.props.characters;
+    characters[this.props.match.params.id].conditions = conditions;
+    // Update local storage with changed characters
+    const setCharacters = () => new Promise( (resolve, reject) => {
+      localStorage.setItem( "characters", characters );
+      resolve();
+    });
+    setCharacters();
   }
 
   render() {
