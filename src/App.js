@@ -22,15 +22,26 @@ import conditionImages from './Images.js';
 
 class ConditionRow extends Component {
   render() {
-    return(
-      <div className="Condition">
-        <button onClick={(e) => this.props.handleClick(this.props.condition)}>
-          <img className="ConditionImage" src={conditionImages[this.props.index]} alt={this.props.condition} /><br />
-          <p><strong>{this.props.condition}</strong></p>
-          <p className="ConditionDescription">{this.props.description}</p>
-        </button>
-      </div>
-    );
+    if( this.props.enabled === "yes" ) {
+      return(
+        <div className="Condition">
+          <button onClick={(e) => this.props.handleClick(this.props.condition)}>
+            <img className="ConditionImage" src={conditionImages[this.props.index]} alt={this.props.condition} />
+            <p className="ConditionTitle"><strong>{capFirstLetter(this.props.condition)}</strong></p>
+            <p className="ConditionDescription">{this.props.description}</p>
+          </button>
+        </div>
+      );
+    }
+    else {
+      return(
+        <div className="Condition Disabled">
+            <img className="ConditionImage" src={conditionImages[this.props.index]} alt={this.props.condition} />
+            <p className="ConditionTitle"><strong>{capFirstLetter(this.props.condition)}</strong></p>
+            <p className="ConditionDescription">{this.props.description}</p>
+        </div>
+      );
+    }
   }
 }
 
@@ -51,6 +62,7 @@ class AddCondition extends Component {
   }
 
   render() {
+    let conditions = this.props.characters[this.props.match.params.id].conditions;
     return( 
       <div className="App">
         <nav><Link to="/">Home</Link></nav>
@@ -59,10 +71,10 @@ class AddCondition extends Component {
             <h1>Add Condition</h1>
           </header>
           <div className="Conditions">
-          <ConditionRow index='0' condition='distracted' description="You have difficulty focusing." handleClick={this.conditionSelected} />
-          <ConditionRow index='1' condition='immobilized' description="You're rooted to the spot." handleClick={this.conditionSelected} />
-          <ConditionRow index='2' condition='pumped' description="You're on fire! Not literally." handleClick={this.conditionSelected} />
-          <ConditionRow index='3' condition='stunned' description="You can barely think." handleClick={this.conditionSelected} />
+          <ConditionRow index='0' condition='distracted' enabled={ conditions.includes("distracted") ? "no" : "yes" } description="You have difficulty focusing." handleClick={this.conditionSelected} /> }
+          <ConditionRow index='1' condition='immobilized' enabled={ conditions.includes("immobilized") ? "no" : "yes" } description="You're rooted to the spot." handleClick={this.conditionSelected} />
+          <ConditionRow index='2' condition='pumped' enabled={ conditions.includes("pumped") ? "no" : "yes" } description="You're on fire! Not literally." handleClick={this.conditionSelected} />
+          <ConditionRow index='3' condition='stunned' enabled={ conditions.includes("stunned") ? "no" : "yes" } description="You can barely think." handleClick={this.conditionSelected} />
           </div>
         </div>
       </div>
