@@ -13,10 +13,13 @@ class AddCondition extends Component {
       let characters = this.props.characters;
       characters[this.props.match.params.id].conditions.push( condition );
       const setCharacters = () => new Promise( (resolve, reject) => {
-        localStorage.setItem( "characters", characters );
+        localStorage.setItem( "characters", JSON.stringify(characters) );
         resolve();
       });
-      setCharacters().then( this.props.history.push( "/char/" + this.props.match.params.id ) );
+      let here = this;
+      setCharacters().then( function() {
+        here.props.history.push( "/char/" + here.props.match.params.id );
+       } );
     }
   
     render() {

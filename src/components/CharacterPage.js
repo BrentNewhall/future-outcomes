@@ -107,7 +107,7 @@ class CharacterPage extends Component {
       characters[this.props.match.params.id].conditions = conditions;
       // Update local storage with changed characters
       const setCharacters = () => new Promise( (resolve, reject) => {
-        localStorage.setItem( "characters", characters );
+        localStorage.setItem( "characters", JSON.stringify(characters) );
         resolve();
       });
       setCharacters();

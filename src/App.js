@@ -28,13 +28,11 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    if( this.props.characters === undefined ) {
-      this.hydrate();
-    }
+    this.hydrate();
   }
 
   hydrate() {
-    if( localStorage.getItem("characters") !== 'undefined' ) {
+    if( localStorage.getItem("characters") !== null ) {
       store.dispatch( setCharacters( JSON.parse(localStorage.getItem("characters")) ) );
     }
   }

@@ -15,7 +15,7 @@ class AddMove extends Component {
       let characters = this.props.characters;
       characters[this.props.match.params.id].moves.push( moveID );
       const setCharacters = () => new Promise( (resolve, reject) => {
-        localStorage.setItem( "characters", characters );
+        localStorage.setItem( "characters", JSON.stringify(characters) );
         resolve();
       });
       setCharacters().then( this.props.history.push( "/char/" + this.props.match.params.id ) );
