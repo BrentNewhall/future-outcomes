@@ -9,6 +9,7 @@ import 'react-confirm-alert/src/react-confirm-alert.css'
 import { connect } from 'react-redux';
 import './App.css';
 
+import ConditionColumn from './components/ConditionColumn.js';
 import Outcome from './components/Outcome.js';
 import AddCondition from './components/AddCondition.js';
 import AddMove from './components/AddMove.js';
@@ -21,19 +22,6 @@ import {
 import conditionImages from './Images.js';
 
 //const ReactMarkdown = require( 'react-markdown' );
-
-class ConditionColumn extends Component {
-  render() {
-    return (
-      <div className="Condition">
-        <button className="ConditionButton" onClick={(e) => this.props.confirm(this.props.condition)}>
-          <img src={this.props.src} className="ConditionImage" alt={this.props.condition} />
-        </button>
-        {this.props.condition}
-      </div>
-    );
-  }
-}
 
 class CharacterPage extends Component {
   constructor( props ) {
