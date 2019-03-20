@@ -16,4 +16,4 @@ class OutcomeRows extends Component {
     }
   }
   
-export default OutcomeRows;  
+export default OutcomeRows;
