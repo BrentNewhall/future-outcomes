@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { confirmAlert } from 'react-confirm-alert';
 import { Link } from 'react-router-dom';
 
+import Navbar from './Navbar.js';
 import ConditionColumn from './ConditionColumn.js';
 import Outcome from './Outcome.js';
 import store from '../store.js';
@@ -151,7 +152,7 @@ class CharacterPage extends Component {
       }
       return (
         <div className="App">
-          <nav><Link to="/">Home</Link></nav>
+          <Navbar />
           <div className="container">
             <header>
               <h1>{this.state.name}</h1>

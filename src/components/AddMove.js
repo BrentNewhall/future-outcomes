@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
+import Navbar from './Navbar.js';
 import OutcomeRows from './OutcomeRows.js';
 import { moves } from '../Moves.js';
 import { capFirstLetter } from './functions.js';
@@ -58,7 +59,7 @@ class AddMove extends Component {
       });
       return( 
         <div className="App">
-          <nav><Link to="/">Home</Link></nav>
+          <Navbar />
           <div className="container">
             <header>
               <h1>Add Move</h1>

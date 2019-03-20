@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
+import Navbar from './Navbar.js';
 import ConditionRow from './ConditionRow.js';
 
 class AddCondition extends Component {
@@ -26,7 +27,7 @@ class AddCondition extends Component {
       let conditions = this.props.characters[this.props.match.params.id].conditions;
       return( 
         <div className="App">
-          <nav><Link to="/">Home</Link></nav>
+          <Navbar />
           <div className="container">
             <header>
               <h1>Add Condition</h1>

@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+
+import Navbar from './Navbar.js';
 
 class Help extends Component {
     render() {
         return( 
             <div className="App">
-            <nav><Link to="/">Home</Link></nav>
+            <Navbar />
             <div className="container">
               <header>
                 <h1>Help</h1>
