@@ -25,11 +25,6 @@
 
 .RedeemButton {
   margin-left: 10px;
-  color: green;
-}
-
-.RedeemButton.Disabled {
-  color: gray;
 }
 
 .bad {
@@ -68,12 +63,25 @@
   margin: 0 auto;
 }
 
-.ConditionTitle {
-}
-
 .ConditionButton {
   background: none;
   border: 0px;
+}
+
+.HurtRow {
+  display: flex;
+}
+
+.HurtBar {
+  flex-grow: 1;
+}
+
+.HurtLeftButton {
+  margin-right: 10px;
+}
+
+.HurtRightButton {
+  margin-left: 10px;
 }
 
 .btn.hurt {

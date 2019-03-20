@@ -126,10 +126,7 @@ class CharacterPage extends Component {
                       <Outcome id={this.state.moves[this.state.moves.length-1]} addLuckPoint={this.addLuckPoint} luck={this.state.luckPoints} />
                     </div> );
       }
-      let redeemClasses = "RedeemButton";
-      if( this.state.luckPoints === 0 ) {
-        redeemClasses += " Disabled";
-      }
+      let redeemDisabled = (this.state.luckPoints === 0 ) ? true : false;
       let hurt = 0;
       let conditions = [];
       this.state.conditions.forEach( (condition, index) => {
@@ -162,10 +159,12 @@ class CharacterPage extends Component {
             <div className="Conditions">{conditions}</div>
             <Link className="btn" to={"/char/addCondition/" + this.props.match.params.id}>Add Condition</Link><br />
             Hurt:
-            <div className="progress"><div className="determinate" style={hurtStyle}></div></div>
-            <button className="btn hurt" onClick={() => this.removeHurt()}>-</button>
-            <button className="btn hurt" onClick={() => this.addHurt()}>+</button>
-            <aside>Luck: {this.state.luckPoints}<button className={redeemClasses} onClick={(e) => this.redeemLuck(e)}>Redeem</button></aside>
+            <div className="HurtRow">
+              <button className="HurtLeftButton btn hurt" onClick={() => this.removeHurt()}>-</button>
+              <div className="HurtBar progress"><div className="determinate" style={hurtStyle}></div></div>
+              <button className="HurtRightButton btn hurt" onClick={() => this.addHurt()}>+</button>
+            </div>
+            <aside>Luck: {this.state.luckPoints}<button className="btn RedeemButton" disabled={redeemDisabled} onClick={(e) => this.redeemLuck(e)}>Redeem</button></aside>
             {moves}
             <Link className="btn" to={"/char/addMove/" + this.props.match.params.id}>Add Move</Link><br />
             <button className="btn red" onClick={(e) => this.deleteCharacter()}>Delete</button>
