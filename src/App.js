@@ -8,6 +8,7 @@ import 'react-confirm-alert/src/react-confirm-alert.css'
 import { connect } from 'react-redux';
 import './App.css';
 
+import Navbar from './components/Navbar.js';
 import CharacterPage from './components/CharacterPage.js';
 import AddCondition from './components/AddCondition.js';
 import AddMove from './components/AddMove.js';
@@ -58,7 +59,7 @@ class Home extends Component {
     }
     return (
       <div className="App">
-        <nav><Link to="/">Home</Link></nav>
+        <Navbar />
         <div className="container">
           <header>
             <h1>Future Outcome</h1>

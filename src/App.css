@@ -127,6 +127,11 @@ aside {
 
 nav {
   background-color: #594157;
+  padding-left: 10px;
+}
+
+nav > a {
+  margin-right: 10px;
 }
 
 .btn {
