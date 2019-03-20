@@ -9,6 +9,8 @@ import 'react-confirm-alert/src/react-confirm-alert.css'
 import { connect } from 'react-redux';
 import './App.css';
 
+import ConditionRow from './components/ConditionRow.js';
+import { capFirstLetter } from './components/functions.js';
 import { moves } from './Moves.js';
 import store from './store.js';
 import {
@@ -19,31 +21,6 @@ import {
 import conditionImages from './Images.js';
 
 //const ReactMarkdown = require( 'react-markdown' );
-
-class ConditionRow extends Component {
-  render() {
-    if( this.props.enabled === "yes" ) {
-      return(
-        <div className="Condition">
-          <button onClick={(e) => this.props.handleClick(this.props.condition)}>
-            <img className="ConditionImage" src={conditionImages[this.props.index]} alt={this.props.condition} />
-            <p className="ConditionTitle"><strong>{capFirstLetter(this.props.condition)}</strong></p>
-            <p className="ConditionDescription">{this.props.description}</p>
-          </button>
-        </div>
-      );
-    }
-    else {
-      return(
-        <div className="Condition Disabled">
-            <img className="ConditionImage" src={conditionImages[this.props.index]} alt={this.props.condition} />
-            <p className="ConditionTitle"><strong>{capFirstLetter(this.props.condition)}</strong></p>
-            <p className="ConditionDescription">{this.props.description}</p>
-        </div>
-      );
-    }
-  }
-}
 
 class AddCondition extends Component {
   constructor( props ) {
@@ -98,10 +75,6 @@ class OutcomeRows extends Component {
     });
     return outcomes;
   }
-}
-
-function capFirstLetter( text ) {
-  return text.charAt(0).toUpperCase() + text.slice(1);
 }
 
 class AddMove extends Component {
