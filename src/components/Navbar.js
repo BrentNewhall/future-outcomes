@@ -7,6 +7,7 @@ class Navbar extends Component {
             <nav>
                 <Link to="/">Home</Link>
                 <Link to="/civs">Civilizations</Link>
+                <Link to="/enemies">Enemies</Link>
                 <Link to="/help">Help</Link>
             </nav>
         )
