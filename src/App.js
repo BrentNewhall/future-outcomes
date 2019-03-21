@@ -14,6 +14,7 @@ import AddCondition from './components/AddCondition.js';
 import AddMove from './components/AddMove.js';
 import Help from './components/Help.js';
 import Civilizations from './components/Civilizations.js';
+import Enemies from './components/Enemies.js';
 import store from './store.js';
 import {
   createNewCharacter,
@@ -91,6 +92,7 @@ class App extends Component {
           <Route exact path="/char/addCondition/:id" component={AddConditionPage} />
           <Route exact path="/civs" component={CivilizationsPage} />
           <Route exact path="/help" component={HelpPage} />
+          <Route exact path="/enemies" component={EnemyPage} />
         </div>
       </Router>
     )
@@ -118,5 +120,8 @@ const HelpPage = connect(mapStateToProps)(HelpConnected);
 
 const CivilizationsConnected = connect()(Civilizations);
 const CivilizationsPage = connect(mapStateToProps)(CivilizationsConnected);
+
+const EnemyConnected = connect()(Enemies);
+const EnemyPage = connect(mapStateToProps)(EnemyConnected);
 
 export default App;
