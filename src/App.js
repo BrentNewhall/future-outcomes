@@ -71,8 +71,10 @@ class Home extends Component {
           <ul>
             {characters}
           </ul>
+          <hr />
           <h2>Create Character</h2>
-          <label htmlFor="new-character-name">Name:</label><input type="text" name="new-character-name" id="new-character-name" ref={this.newCharName} /> <button onClick={(e) => this.createCharacter(e)}>Create</button>
+          <label htmlFor="new-character-name">Name:</label><input type="text" name="new-character-name" id="new-character-name" ref={this.newCharName} />
+          <button className="btn" onClick={(e) => this.createCharacter(e)}>Create</button>
         </div>
       </div>
     )
