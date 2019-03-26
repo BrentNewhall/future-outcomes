@@ -37,6 +37,32 @@ class Civilizations extends Component {
                     </div>
                 </li>
                 <li>
+                    <div className="collapsible-header">The Twilight People</div>
+                    <div className="collapsible-body">
+                        <p>These humanoids live in domed cities in a post-scarcity society, attended by robots that take care of their every whim. Any vice can be indulged more or less instantly thanks to food replication and custom-built androids.</p>
+                        <p>And this civilization is in total decline. People are apathetic, self-indulgent, and don't take care of children, who grow up even more apathetic and self-indulgent.</p>
+                        <p>All is not lost, however. A heavily repressed revolutionary group, the New Children, seek to overthrow the robots.</p>
+                        <h2><i class="fas fa-walking"></i> Characters</h2>
+                        <ol>
+                            <li> City Leader Severina, severe and thoughtful.</li>
+                            <li> Maximilian, head of security, stern and intense.</li>
+                            <li> Arina, leader of the revolution, beautiful and naive.</li>
+                            <li> Nicolas, revolutionary contact, scarred and jumpy.</li>
+                            <li> Lilia, assassin, charming and quirky.</li>
+                            <li> Viorel the inventor, gentle and ugly.</li>
+                        </ol>
+                        <h2><i class="fas fa-exclamation-circle"></i> Escalations</h2>
+                        <ol>
+                            <li> The New Children stage a protest.</li>
+                            <li> The New Children sneak into a factory and things get out of hand.</li>
+                            <li> The news accuses the New Children of terrorism.</li>
+                            <li> A key diplomat dies mysteriously.</li>
+                            <li> A key member of the New Children dies mysteriously.</li>
+                            <li> Maximilian announces a purge of the New Children.</li>
+                        </ol>
+                    </div>
+                </li>
+                <li>
                     <div className="collapsible-header">Valla and Thonna</div>
                     <div className="collapsible-body">
                         <p>This world is divided into two major continents, Valla and Thonna.</p>
