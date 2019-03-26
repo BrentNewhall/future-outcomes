@@ -48,6 +48,20 @@ const enemies = [
         ]
     },
     {
+        id: "guard-bot",
+        name: "Guard Bot",
+        hurt: 1,
+        trigger: "When the guard bot is attacked",
+        outcomes: [
+            "The guard bot alerts others to your presence.",
+            "The guard bot alerts others to your presence.",
+            "The guard bot alerts others to your presence.",
+            "The guard bot sparks, hurting any creature within 3 meters.",
+            "The guard bot sparks, hurting any creature within 3 meters.",
+            "The guard bot alerts others to your presence and sparks, hurting any creature within 3 meters.",
+        ]
+    },
+    {
         id: "killer-kudzu",
         name: "Killer Kudzu",
         hurt: 3,
