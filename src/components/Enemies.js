@@ -50,7 +50,7 @@ const enemies = [
     {
         id: "giant-malfunctioning-death-machine",
         name: "Giant Malfunctioning Death Machine",
-        hurt: 1,
+        hurt: 6,
         trigger: "When anyone touches the machine",
         outcomes: [
             "Oil spurts out of a hole, covering nearby creatures and the ground in slippery oil.",
