@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
-import Navbar from './Navbar.js';
 import OutcomeRows from './OutcomeRows.js';
 import { moves } from '../Moves.js';
 import { capFirstLetter } from './functions.js';
@@ -58,15 +57,12 @@ class AddMove extends Component {
                 </div> );
       });
       return( 
-        <div className="App">
-          <Navbar />
-          <div className="container">
-            <header>
-              <h1>Add Move</h1>
-            </header>
-            {tables}
-            <Link to={"/char/" + this.props.match.params.id}>&lt; Back</Link>
-          </div>
+        <div>
+          <header>
+            <h1>Add Move</h1>
+          </header>
+          {tables}
+          <Link to={"/char/" + this.props.match.params.id}>&lt; Back</Link>
         </div>
       );
     }

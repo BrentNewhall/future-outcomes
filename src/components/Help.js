@@ -1,13 +1,9 @@
 import React, { Component } from 'react';
 
-import Navbar from './Navbar.js';
-
 class Help extends Component {
     render() {
         return( 
-            <div className="App">
-            <Navbar />
-            <div className="container">
+            <div>
               <header>
                 <h1>Help</h1>
               </header>
@@ -19,7 +15,6 @@ class Help extends Component {
               <p>Some Outcomes will apply a new Condition to your character, like <em>immobilized</em> or <em>distracted</em>. To add a Condition, tap the Add Condition button and select it.</p>
               <p>There's one special Outcome: <em>hurt</em>. You can be hurt multiple times! There's a progress bar to track your hurt; tap the + or - buttons to add or remove hurt.</p>
             </div>
-          </div>
         )
     }
 }

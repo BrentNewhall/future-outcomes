@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { confirmAlert } from 'react-confirm-alert';
 import { Link } from 'react-router-dom';
 
-import Navbar from './Navbar.js';
 import ConditionColumn from './ConditionColumn.js';
 import Outcome from './Outcome.js';
 import store from '../store.js';
@@ -151,25 +150,22 @@ class CharacterPage extends Component {
         width: parseInt(hurt / 5 * 100).toString() + "%"
       }
       return (
-        <div className="App">
-          <Navbar />
-          <div className="container">
-            <header>
-              <h1>{this.state.name}</h1>
-            </header>
-            <div className="Conditions">{conditions}</div>
-            <Link className="btn" to={"/char/addCondition/" + this.props.match.params.id}>Add Condition</Link><br />
-            Hurt:
-            <div className="HurtRow">
-              <button className="HurtLeftButton btn hurt" onClick={() => this.removeHurt()}>-</button>
-              <div className="HurtBar progress"><div className="determinate" style={hurtStyle}></div></div>
-              <button className="HurtRightButton btn hurt" onClick={() => this.addHurt()}>+</button>
-            </div>
-            <aside>Luck: {this.state.luckPoints}<button className="btn RedeemButton" disabled={redeemDisabled} onClick={(e) => this.redeemLuck(e)}>Redeem</button></aside>
-            {moves}
-            <Link className="btn" to={"/char/addMove/" + this.props.match.params.id}>Add Move</Link><br />
-            <button className="btn red" onClick={(e) => this.deleteCharacter()}>Delete</button>
+        <div>
+          <header>
+            <h1>{this.state.name}</h1>
+          </header>
+          <div className="Conditions">{conditions}</div>
+          <Link className="btn" to={"/char/addCondition/" + this.props.match.params.id}>Add Condition</Link><br />
+          Hurt:
+          <div className="HurtRow">
+            <button className="HurtLeftButton btn hurt" onClick={() => this.removeHurt()}>-</button>
+            <div className="HurtBar progress"><div className="determinate" style={hurtStyle}></div></div>
+            <button className="HurtRightButton btn hurt" onClick={() => this.addHurt()}>+</button>
           </div>
+          <aside>Luck: {this.state.luckPoints}<button className="btn RedeemButton" disabled={redeemDisabled} onClick={(e) => this.redeemLuck(e)}>Redeem</button></aside>
+          {moves}
+          <Link className="btn" to={"/char/addMove/" + this.props.match.params.id}>Add Move</Link><br />
+          <button className="btn red" onClick={(e) => this.deleteCharacter()}>Delete</button>
         </div>
       );
     }

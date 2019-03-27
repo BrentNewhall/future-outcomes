@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
-import Navbar from './Navbar.js';
 import ConditionRow from './ConditionRow.js';
 
 class AddCondition extends Component {
@@ -26,21 +25,18 @@ class AddCondition extends Component {
     render() {
       let conditions = this.props.characters[this.props.match.params.id].conditions;
       return( 
-        <div className="App">
-          <Navbar />
-          <div className="container">
-            <header>
-              <h1>Add Condition</h1>
-            </header>
-            <div className="Conditions">
-              <ConditionRow index='0' condition='distracted' enabled={ conditions.includes("distracted") ? "no" : "yes" } description="You have difficulty focusing." handleClick={this.conditionSelected} /> }
-              <ConditionRow index='1' condition='immobilized' enabled={ conditions.includes("immobilized") ? "no" : "yes" } description="You're rooted to the spot." handleClick={this.conditionSelected} />
-              <ConditionRow index='2' condition='pumped' enabled={ conditions.includes("pumped") ? "no" : "yes" } description="You're on fire! Not literally." handleClick={this.conditionSelected} />
-              <ConditionRow index='3' condition='stunned' enabled={ conditions.includes("stunned") ? "no" : "yes" } description="You can barely think." handleClick={this.conditionSelected} />
-            </div>
-            <br />
-            <Link to={"/char/" + this.props.match.params.id}>&lt; Back</Link>
+        <div>
+          <header>
+            <h1>Add Condition</h1>
+          </header>
+          <div className="Conditions">
+            <ConditionRow index='0' condition='distracted' enabled={ conditions.includes("distracted") ? "no" : "yes" } description="You have difficulty focusing." handleClick={this.conditionSelected} /> }
+            <ConditionRow index='1' condition='immobilized' enabled={ conditions.includes("immobilized") ? "no" : "yes" } description="You're rooted to the spot." handleClick={this.conditionSelected} />
+            <ConditionRow index='2' condition='pumped' enabled={ conditions.includes("pumped") ? "no" : "yes" } description="You're on fire! Not literally." handleClick={this.conditionSelected} />
+            <ConditionRow index='3' condition='stunned' enabled={ conditions.includes("stunned") ? "no" : "yes" } description="You can barely think." handleClick={this.conditionSelected} />
           </div>
+          <br />
+          <Link to={"/char/" + this.props.match.params.id}>&lt; Back</Link>
         </div>
       );
     }

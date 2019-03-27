@@ -61,21 +61,18 @@ class Home extends Component {
       });
     }
     return (
-      <div className="App">
-        <Navbar />
-        <div className="container">
-          <header>
-            <h1>Future Outcome</h1>
-          </header>
-          <h2>Characters</h2>
-          <ul>
-            {characters}
-          </ul>
-          <hr />
-          <h2>Create Character</h2>
-          <label htmlFor="new-character-name">Name:</label><input type="text" name="new-character-name" id="new-character-name" ref={this.newCharName} />
-          <button className="btn" onClick={(e) => this.createCharacter(e)}>Create</button>
-        </div>
+      <div>
+        <header>
+          <h1>Future Outcome</h1>
+        </header>
+        <h2>Characters</h2>
+        <ul>
+          {characters}
+        </ul>
+        <hr />
+        <h2>Create Character</h2>
+        <label htmlFor="new-character-name">Name:</label><input type="text" name="new-character-name" id="new-character-name" ref={this.newCharName} />
+        <button className="btn" onClick={(e) => this.createCharacter(e)}>Create</button>
       </div>
     )
   }
@@ -86,15 +83,18 @@ class App extends Component {
   render() {
     return (
       <Router>
-        <div>
-          <Route exact path="/" component={HomePage} />
-          <Route exact path="/home" component={HomePage} />
-          <Route exact path="/char/:id" component={CharPage} />
-          <Route exact path="/char/addMove/:id" component={AddMovePage} />
-          <Route exact path="/char/addCondition/:id" component={AddConditionPage} />
-          <Route exact path="/civs" component={CivilizationsPage} />
-          <Route exact path="/help" component={HelpPage} />
-          <Route exact path="/enemies" component={EnemyPage} />
+        <div className="App">
+          <Navbar />
+          <div className="container">
+            <Route exact path="/" component={HomePage} />
+            <Route path="/home" component={HomePage} />
+            <Route path="/char/:id" component={CharPage} />
+            <Route path="/char/addMove/:id" component={AddMovePage} />
+            <Route path="/char/addCondition/:id" component={AddConditionPage} />
+            <Route path="/civs" component={CivilizationsPage} />
+            <Route path="/help" component={HelpPage} />
+            <Route path="/enemies" component={EnemyPage} />
+          </div>
         </div>
       </Router>
     )
